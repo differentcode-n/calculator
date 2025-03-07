@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Calculator</title>
+    <link rel="stylesheet" href="auto.css">
+</head>
+<body>
+    <div class="calculator">
+        <h1>Auto Calculator</h1>
+        <div class="converter">
+            <label for="category">Select Category:</label>
+            <select id="category" onchange="updateUnits()">
+                <option value="length">Length</option>
+                <option value="weight">Weight</option>
+                <option value="temperature">Temperature</option>
+                <option value="speed">Speed</option>
+                <option value="volume">Volume</option>
+            </select>
+        </div>
+        <div class="converter">
+            <label for="fromUnit">From:</label>
+            <select id="fromUnit"></select>
+            <input type="number" id="fromValue" placeholder="Enter value" oninput="convert()">
+        </div>
+        <div class="converter">
+            <label for="toUnit">To:</label>
+            <select id="toUnit"></select>
+            <input type="text" id="toValue" disabled>
+        </div>
+        <button onclick="navigateToScientific()" class="backward"><-</button>
+        <button onclick="navigateToFinancial()" class="forward">-></button>
+        
+    </div>
+
+
+    <script src="auto.js"></script>
+</body>
+</html>

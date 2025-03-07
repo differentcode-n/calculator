@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific calculator</title>  
+    <link rel="stylesheet" href="basic.css">
+    <link rel="stylesheet" href="auto.css">
+    <style>
+        body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .calculator {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  #display {
+    width: 100%;
+    height: 50px;
+    font-size: 24px;
+    text-align: right;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #444;
+    color: #fff;
+  }
+  
+  .buttons {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+  }
+  
+  button {
+    padding: 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    background-color: #555;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .ac {
+    
+    background-color: orangered;
+  }
+  .ac:hover {
+    background-color: rgba(255, 68, 0, 0.653);
+  }
+
+  
+  button:hover {
+    background-color: #777;
+  }
+  
+  button:active {
+    background-color: #999;
+  }
+
+  .forward, .backward {
+    background-color: #3498db;
+}
+
+.forward:hover, .backward:hover {
+    background-color: #2980b9;
+}
+    </style>
+</head>
+<body>
+   
+  <div class="calculator">
+    <input type="text" id="display" disabled>
+    <div class="buttons">
+      <button onclick="clearDisplay()" class="ac">AC</button>
+      <button onclick="deleteLast()" class="ac">DEL</button>
+      <button onclick="appendToDisplay(')')" class="ac">)</button>
+      <button onclick="appendToDisplay('^')" class="ac">^</button>
+      <button onclick="appendToDisplay('/')" class="ac">/</button>
+
+      <button onclick="appendToDisplay('7')">7</button>
+      <button onclick="appendToDisplay('8')">8</button>
+      <button onclick="appendToDisplay('9')">9</button>
+      <button onclick="appendToDisplay('*')">*</button>
+      <button onclick="appendToDisplay('sqrt(')" class="ac">√</button>
+
+      <button onclick="appendToDisplay('4')">4</button>
+      <button onclick="appendToDisplay('5')">5</button>
+      <button onclick="appendToDisplay('6')">6</button>
+      <button onclick="appendToDisplay('-')">-</button>
+      <button onclick="appendToDisplay('sin(')" class="ac">sin</button>
+
+      <button onclick="appendToDisplay('1')">1</button>
+      <button onclick="appendToDisplay('2')">2</button>
+      <button onclick="appendToDisplay('3')">3</button>
+      <button onclick="appendToDisplay('+')">+</button>
+      <button onclick="appendToDisplay('cos(')" class="ac">cos</button>
+
+      <button onclick="appendToDisplay('0')">0</button>
+      <button onclick="appendToDisplay('.')">.</button>
+      
+      <button onclick="appendToDisplay('deg(')" class="ac">Deg</button> <!-- Degrees Button -->
+      <button onclick="appendToDisplay('log(')" class="ac">log</button>
+      <button onclick="appendToDisplay('tan(')" class="ac">tan</button>
+      <button onclick="calculateResult()">=</button>
+      <button onclick="navigateToBasic()" class="backward"><-</button>
+      <button onclick="navigateToAuto()" class="forward">-></button>
+     
+    </div>
+  </div>
+  <script>
+    function appendToDisplay(value) {
+    const display = document.getElementById('display');
+    display.value += value;
+  }
+  
+  function clearDisplay() {
+    const display = document.getElementById('display');
+    display.value = '';
+  }
+  
+  function deleteLast() {
+    const display = document.getElementById('display');
+    display.value = display.value.slice(0, -1);
+  }
+  
+  function calculateResult() {
+    const display = document.getElementById('display');
+    try {
+      let expression = display.value;
+  
+      // Replace '^' with '**' for exponentiation
+      expression = expression.replace(/\^/g, '**');
+  
+      // Evaluate trigonometric functions in radians
+      expression = expression.replace(/sin\(/g, 'Math.sin(');
+      expression = expression.replace(/cos\(/g, 'Math.cos(');
+      expression = expression.replace(/tan\(/g, 'Math.tan(');
+  
+      // Evaluate square root and log functions
+      expression = expression.replace(/sqrt\(/g, 'Math.sqrt(');
+      expression = expression.replace(/log\(/g, 'Math.log10(');
+
+       // Replace 'deg(' with the radian conversion
+      expression = expression.replace(/deg\(/g, '(Math.PI / 180 * ');
+  
+      // Evaluate the expression
+      display.value = eval(expression);
+    } catch (error) {
+      display.value = 'Error';
+    }
+  }
+  
+  
+function navigateToBasic() {
+    window.location.href = 'basic.html';
+}
+function navigateToAuto() {
+    window.location.href = 'Auto.html';
+}
+
+  </script>
+  <script src="basic.js"></script>
+
+   
+</body>
+</html>
